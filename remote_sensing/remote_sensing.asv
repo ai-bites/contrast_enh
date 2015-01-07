@@ -1,0 +1,29 @@
+clc; clear all;
+
+% take 2D DWT of the input image
+A = imread('cameraman.tif');
+
+[LL HH HL LH] = dwt2(A,'db1');
+
+%% compute dominant brightness level 
+
+% for each pixel(x,y) compute the dominant brightness level
+D = domain_brightness(LL);
+
+
+%% form 3 layers based on the dominant brightness measure
+low_bound = 0.4; high_bound = 0.7;
+low_layer = (D < low_bound)*D;
+mid_layer = (D > low_bound && D < high_ound)*D;
+high_layer = (D > high_bound)*D;
+
+%% 
+
+
+
+
+
+% final inverse DWT with processed LL band
+result = uint8(idwt2(LL,HH,HL,LH,'db1'));
+imshow(result);
+
